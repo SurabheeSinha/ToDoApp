@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "todo")
-data class ToDo (
+data class ToDo(
         @ColumnInfo(name = "id")
         @PrimaryKey(autoGenerate = true)
         var id: Long? = null,

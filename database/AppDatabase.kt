@@ -8,18 +8,18 @@ import com.securitypeople.todoapp.database.dao.ToDoDao
 import com.securitypeople.todoapp.models.ToDo
 
 @Database(entities = ([ToDo::class]), version = 1)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun toDoDao(): ToDoDao
 
-    companion object{
+    companion object {
 
         const val DATABASE_VERSION = 1
         val DATABASE_NAME = "Todo"
-        private var mInstance :AppDatabase?=null
-        fun getInstance(context: Context):AppDatabase{
-            if(mInstance == null)
-                mInstance= Room.databaseBuilder(context,AppDatabase::class.java, DATABASE_NAME)
+        private var mInstance: AppDatabase? = null
+        fun getInstance(context: Context): AppDatabase {
+            if (mInstance == null)
+                mInstance = Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                         .fallbackToDestructiveMigration()
                         .build()
             return mInstance!!

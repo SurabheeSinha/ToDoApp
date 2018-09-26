@@ -1,9 +1,6 @@
 package com.securitypeople.todoapp.database.dao
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.securitypeople.todoapp.models.ToDo
 import io.reactivex.Flowable
 
@@ -12,8 +9,11 @@ interface ToDoDao {
     @Query("SELECT * FROM todo")
     fun getAll(): Flowable<List<ToDo>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg todo: ToDo)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(vararg todo: ToDo)
 
     @Delete
     fun delete(vararg todo: ToDo)
