@@ -151,19 +151,29 @@ class MainActivity : AppCompatActivity() {
                         }.create().show()
             }
             1->{
-                val editName = EditText(this@MainActivity)
-                editName.setText(toDoItem.todoText)
-                editName.hint = "Enter the Task"
+                //val editTask = EditText(this@MainActivity)
+                //val editDate = EditText(this@MainActivity)
+                val inflater = LayoutInflater.from(this@MainActivity)
+                val subView = inflater.inflate(R.layout.fragment_todo_dialog, null)
+                val editTask = subView.findViewById<View>(R.id.todo) as EditText
+                val editDate = subView.findViewById<View>(R.id.date) as EditText
+
+                editTask.setText(toDoItem.todoText)
+                editDate.setText(toDoItem.createdAt)
+                editTask.hint = "Enter the Task"
+                editDate.hint = "Enter the Date"
                 AlertDialog.Builder(this@MainActivity)
-                        .setTitle("Edit")
-                        .setMessage("Edit the Task")
-                        .setView(editName)
+                        .setTitle("Update")
+                        .setView(subView)
                         .setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener
                         { dialog, which ->
-                           if(TextUtils.isEmpty(editName.text.toString()))
-                            return@OnClickListener
+                           if(TextUtils.isEmpty(editTask.text.toString())||(TextUtils.isEmpty(editDate.text.toString()))) {
+                               Toast.makeText(this@MainActivity, "Task/Date cannot be left Empty", Toast.LENGTH_LONG).show()
+                               return@OnClickListener
+                           }
                             else{
-                               toDoItem.todoText = editName.text.toString()
+                               toDoItem.todoText = editTask.text.toString()
+                               toDoItem.createdAt = editDate.text.toString()
                                updateTask(toDoItem)
                            }
 
